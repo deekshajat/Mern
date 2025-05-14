@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import config from '../config';
@@ -10,26 +10,28 @@ const Notes = () => {
     const [editingNote, setEditingNote] = useState(null);
     const { token } = useAuth();
 
-    const authConfig = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
-
-    const fetchNotes = async () => {
+    const fetchNotes = useCallback(async () => {
         try {
+            const authConfig = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
             const response = await axios.get(`${config.apiUrl}/api/notes`, authConfig);
             setNotes(response.data);
         } catch (error) {
             console.error('Error fetching notes:', error);
         }
-    };
+    }, [token]);
 
     useEffect(() => {
         fetchNotes();
-    }, [token]);
+    }, [fetchNotes]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            const authConfig = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
             if (editingNote) {
                 await axios.put(`${config.apiUrl}/api/notes/${editingNote._id}`, {
                     title,
@@ -58,6 +60,9 @@ const Notes = () => {
 
     const handleDelete = async (id) => {
         try {
+            const authConfig = {
+                headers: { Authorization: `Bearer ${token}` }
+            };
             await axios.delete(`${config.apiUrl}/api/notes/${id}`, authConfig);
             fetchNotes();
         } catch (error) {

@@ -11,20 +11,17 @@ const app = express();
 
 // Middleware
 app.use(cors({
-    origin: process.env.NODE_ENV === 'production' 
-        ? process.env.FRONTEND_URL 
-        : 'http://localhost:3000',
+    origin: '*',
     credentials: true
 }));
 app.use(express.json());
 
 // MongoDB Connection
-mongoose.connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-.then(() => console.log('MongoDB Connected'))
-.catch(err => console.log('MongoDB Connection Error:', err));
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb+srv://deekshajat95:MkAFXoykf1fDfdSP@cluster-mern.ideiq5j.mongodb.net/?retryWrites=true&w=majority&appName=CLUSTER-MERN';
+
+mongoose.connect(MONGODB_URI)
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.log('MongoDB Connection Error:', err));
 
 // Routes
 app.use('/api/users', require('./routes/users'));
