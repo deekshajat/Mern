@@ -1,0 +1,15 @@
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200 
+
+[build.environment]
+  MONGODB_URI = "mongodb+srv://deekshajat95:MkAFXoykf1fDfdSP@cluster-mern.ideiq5j.mongodb.net/?retryWrites=true&w=majority&appName=CLUSTER-MERN"
+  JWT_SECRET = "your_secure_random_string"
+  NODE_ENV = "production"
+  REACT_APP_API_URL = "your_render_backend_url"
+  FRONTEND_URL = "your_netlify_url"
