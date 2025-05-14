@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: notes-app-backend
+    env: node
+    rootDir: chatgpt-backend
+    buildCommand: cd chatgpt-backend && npm install
+    startCommand: cd chatgpt-backend && node server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://deekshajat95:MkAFXoykf1fDfdSP@cluster-mern.ideiq5j.mongodb.net/?retryWrites=true&w=majority&appName=CLUSTER-MERN
+      - key: JWT_SECRET
+        value: your-super-secret-key-123
+      - key: PORT
+        value: 8080 
